@@ -82,7 +82,7 @@ object chapter8 {
     import spark.implicits._
 
     // Ruta donde se almacenan los archivos en streaming
-    val inputPath = "data/dataset_part"
+    val inputPath = "file:/C:/Users/david.gternero/IdeaProjects/SparkStreaming/data/dataset_part"
 
     val schema = StructType(Array(
       StructField("date", StringType, true),  //
@@ -112,7 +112,7 @@ object chapter8 {
       .outputMode("complete") // Como usamos groupBy, el modo debe ser "complete"
       .format("console")
       .trigger(Trigger.ProcessingTime("10 seconds"))
-      .option("checkpointLocation", "file:///tmp/checkpoints")//
+      .option("checkpointLocation", "file:///tmp/checkpoints_streaming")//
       .start()
 
     queryConsole.awaitTermination()

@@ -38,7 +38,7 @@ object App {
     val clazz = Class.forName(s"chapter$chapterNumber$$")
     val module = clazz.getField("MODULE$").get(null)
     val methodName = s"ejercicio$exerciseNumber"
-    val exerciseMethod = clazz.getMethod(methodName) // , classOf[SparkSession]
+    val exerciseMethod = clazz.getMethod(methodName) // El ej no necesita ", classOf[SparkSession]" como argumento
     exerciseMethod.invoke(module) // Los ejercicios 1,2,3 necesitan que le pasemos la spark session, el 4 no
 
     // Cerrar SparkSession al finalizar
