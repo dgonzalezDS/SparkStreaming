@@ -22,8 +22,8 @@ object App {
     val ejercicio = args(1)
 
     // Crear SparkSession una única vez para utilizarlo en cada capitulo/ejercicio
-    val spark: SparkSession = SparkSession
-      .builder
+    implicit val spark: SparkSession = SparkSession
+      .builder()
       .appName("EjerciciosScala")
       .master("local[*]")
       .config("spark.executor.memory", "4g")
@@ -35,11 +35,25 @@ object App {
     val chapterNumber = args(0)
     val exerciseNumber = args(1)
 
+
+    /* NOTA: En caso de querer usar reflexion y pasar la sparksession explicitamente
+
     val clazz = Class.forName(s"chapter$chapterNumber$$")
     val module = clazz.getField("MODULE$").get(null)
     val methodName = s"ejercicio$exerciseNumber"
-    val exerciseMethod = clazz.getMethod(methodName) // El ej no necesita ", classOf[SparkSession]" como argumento
-    exerciseMethod.invoke(module) // Los ejercicios 1,2,3 necesitan que le pasemos la spark session, el 4 no
+    val exerciseMethod = clazz.getMethod(methodName, classOf[SparkSession]) // El ej no necesita ", classOf[SparkSession]" como argumento
+    exerciseMethod.invoke(module,spark) // Los ejercicios 1,2,3 necesitan que le pasemos la spark session, el 4 no
+    */
+
+    (chapterNumber, exerciseNumber) match {
+      case ("8", "1") => chapter8.ejercicio1()
+      case ("8", "2") => chapter8.ejercicio2()
+      case ("8", "3") => chapter8.ejercicio3()
+      case ("8", "4") => chapter8.ejercicio4()
+      // Añadir más casos aquí
+      case _ => println("Capítulo o ejercicio no encontrado")
+    }
+
 
     // Cerrar SparkSession al finalizar
     spark.stop()

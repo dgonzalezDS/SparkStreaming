@@ -6,7 +6,7 @@ import org.apache.spark.sql.streaming._
 import org.apache.spark.sql.streaming.Trigger
 
 object chapter8 {
-  def ejercicio1(spark: SparkSession): Unit = {
+  def ejercicio1()(implicit spark: SparkSession): Unit = {
 
     val lines = spark
       .readStream.format("socket")
@@ -26,7 +26,7 @@ object chapter8 {
     streamingQuery.awaitTermination()
   }
 
-  def ejercicio2(spark: SparkSession): Unit = {
+  def ejercicio2()(implicit spark: SparkSession): Unit = {
     /*
     PDTE DE ARREGLAR
      */
@@ -41,7 +41,7 @@ object chapter8 {
     inputDF.show()
   }
 
-  def ejercicio3(spark: SparkSession): Unit = {
+  def ejercicio3()(implicit spark: SparkSession): Unit = {
     /*
     Cargamos el dataset de departures delays y lo troceamos en 3 trozos similares
      */
